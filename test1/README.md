@@ -19,7 +19,7 @@ and d.department_name in ('IT'，'Sales')
 GROUP BY department_name;
 ```
 运行结果：
-![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/1.jpg)
+![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/1.png)
 
 
 
@@ -33,7 +33,7 @@ GROUP BY department_name
 HAVING d.department_name in ('IT'，'Sales');
 ```
 运行结果：
-![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/2.jpg)
+![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/2.png)
 
 比较：我认为下面一条语句较为优。两条语句都是查询所有部门及以下员工的总数与平均工资，第一条语句直接在匹配外键约束时，进行查询内容过滤，在结果返回之前起作用，后者则是在匹配出外键之后相当于新生成一张表，再从那张表里进行查询内容过滤，在结果返回之后起作用。
 
@@ -54,5 +54,5 @@ where rownum>0 and rownum<=5
 ```
 
 运行结果：
-![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/3.jpg)
+![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/3.png)
 
