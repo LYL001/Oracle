@@ -8,7 +8,7 @@
 
 ## 教材中的查询语句
 
-查询1：
+-查询1：
 
 ```SQL
 SELECT d.department_name，count(e.job_id)as "部门总人数"，
@@ -39,15 +39,20 @@ HAVING d.department_name in ('IT'，'Sales');
 
 
 - 自定义：
-Oracle并没给出优化建议，但在数据量大时，可以使用OFFSET....FETCH分页显示内容
+查询所有工作里工资大于3000的并以5页为单位进行分页，当前显示了第一页
+主要思想为将查询语句视为一张表，查询这个表里所有的内容和rownum这个关键字
+最后再限定rownum的范围
 
 ```sql
-SELECT d.department_name，count(e.job_id)as "部门总人数"，
-avg(e.salary)as "平均工资"
-FROM hr.departments d，hr.employees e
-WHERE d.department_id = e.department_id
-GROUP BY department_name
-HAVING d.department_name in ('IT'，'Sales');
-OFFSET 5 ROWS FETCH NEXT 5 ROW ONLY;
+select t.*,rownum 
+from (
+select j.job_id,j.job_title 
+from hr.jobs j 
+where j.min_salary>3000 
+order by j.job_id) t 
+where rownum>0 and rownum<=5
 ```
+
+运行结果：
+![运行结果](https://github.com/LYL001/Oracle/blob/master/test1/3.jpg)
 
