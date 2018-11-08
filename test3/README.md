@@ -114,6 +114,51 @@ increment by 1
 cache 20
 order;
 ```
+插入语句执行多次
+```sql
+!NSERT INTO orders(customer_name, customer_tel, order_date, employee_id, trade_receivable, discount) VALUES('www', '182', to_date ( '2015-09-18 12:42:20' , 'YYYY-MM-DD HH24:MI:SS' ), 23, 343, 2);
+INSERT INTO orders(customer_name, customer_tel, order_date, employee_id, trade_receivable, discount) VALUES('eee', '155', to_date ( '2016-08-17 11:21:20' , 'YYYY-MM-DD HH24:MI:SS' ), 233, 322,4);
+INSERT INTO orders(customer_name, customer_tel, order_date, employee_id, trade_receivable, discount) VALUES('rrr', '182', to_date ( '2017-06-16 11:11:20' , 'YYYY-MM-DD HH24:MI:SS' ), 123, 2333,1);
+insert into orders
+select *
+from orders;
+```
+
+```sql
+insert into order_details(id, PRODUCT_ID, PRODUCT_NUM, PRODUCT_PRICE) VALUES(123, 123, 123, 250);
+insert into order_details(id, PRODUCT_ID, PRODUCT_NUM, PRODUCT_PRICE) VALUES(234, 234, 234, 350);
+insert into order_details(id, PRODUCT_ID, PRODUCT_NUM, PRODUCT_PRICE) VALUES(345, 345, 345, 450);
+insert into orders
+select *
+from order_details;
+```
 插入后查询结果脚本输出
 ![](https://github.com/LYL001/Oracle/blob/master/test3/1.png)
 ![](https://github.com/LYL001/Oracle/blob/master/test3/2.png)
+
+## 分区查询
+```sql
+SELECT
+    *
+FROM orders partition (PARTITION_BEFORE_2018), order_details partition (PARTITION_BEFORE_2018);
+
+select * from order_details ode join orders ods
+	on ode.order_id=ods.order_id;
+```
+查询脚本
+![](https://github.com/LYL001/Oracle/blob/master/test3/3.png)
+![](https://github.com/LYL001/Oracle/blob/master/test3/4.png)
+
+## 不分区查询
+```sql
+
+select * from orders, order_details where orders.order_id = order_details.order_id(+)；
+```
+查询脚本
+![](https://github.com/LYL001/Oracle/blob/master/test3/5.png)
+![](https://github.com/LYL001/Oracle/blob/master/test3/6.png)
+
+
+## 对比分析
+两张表均有上万条数据，从表ORDER_DETAILS跟主表ORDERS建立了主外键，orders表按照时间分成三个表空间，通过分区和不分区实验结果对比，分区表查 询的资源占比明显高出很多，查询速度快了不少。
+通过分区， 查询时就不用扫描整张表，而是一块区域一块区域的去查找，这样就会快不少。
