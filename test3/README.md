@@ -115,5 +115,5 @@ cache 20
 order;
 ```
 插入后查询结果脚本输出
-[](../1.png)
-[](2.png)
+[](https://github.com/LYL001/Oracle/blob/master/test3/1.png)
+[](https://github.com/LYL001/Oracle/blob/master/test3/2.png)
