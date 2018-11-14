@@ -6,13 +6,13 @@
 
 
 ###  查询数据：
-    1.查询某个员工的信息
+ 1.查询某个员工的信息
     ```sql
     select * from employees where employee_id=11;
     ```
     
     
-    2.递归查询某个员工及其所有下属，子下属员工。
+  2.递归查询某个员工及其所有下属，子下属员工。
      ```sql
    select a.*,b.Name AS "下属"
 from employees a,employees b
