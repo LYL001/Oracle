@@ -34,7 +34,7 @@ create or replace PACKAGE BODY MyPack IS
       RETURN N;
     END;
 ```
-## 测试
+#### 测试
 函数Get_SaleAmount()测试方法：
 ```SQL
 select count(*) from orders;
@@ -65,7 +65,7 @@ END MyPack;
 ```
 ![](./2.png)
 过程Get_Employees()测试代码：
-## 测试
+#### 测试
 函数Get_SaleAmount()测试方法：
 ```SQL
 set serveroutput on
